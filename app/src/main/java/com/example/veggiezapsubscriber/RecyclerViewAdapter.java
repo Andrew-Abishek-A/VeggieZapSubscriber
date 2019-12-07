@@ -1,14 +1,20 @@
 package com.example.veggiezapsubscriber;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -34,13 +40,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     ArrayList<String> date;
     Context mContext;
     double Total=0;
+    ConstraintLayout layout;
 
-    public RecyclerViewAdapter(Context mContext, ArrayList<String> items, ArrayList<String> qty, ArrayList<String> date, ArrayList<String> price){
+    public RecyclerViewAdapter(Context mContext, ArrayList<String> items, ArrayList<String> qty,
+                               ArrayList<String> date, ArrayList<String> price,
+                               ConstraintLayout layout){
         this.mContext = mContext;
         this.items = items;
         this.qty = qty;
         this.date = date;
         this.price = price;
+        this.layout = layout;
     }
 
     @NonNull
@@ -52,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: The View Binder Has Been Called");
         holder.item.setText(items.get(position));
         holder.price.setText(price.get(position));
@@ -67,12 +77,55 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.parent_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeFromCart();
+                removeFromCart(position);
             }
         });
     }
 
-    private void removeFromCart() {
+    private void removeFromCart(int position) {
+        final String item = items.get(position);
+
+        LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.popup_window1,null);
+
+        final PopupWindow popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+        Button popYes = customView.findViewById(R.id.popYes);
+        popYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.collection("users")
+                        .document(mAuth.getCurrentUser().getEmail())
+                        .collection("cart")
+                        .document(item)
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(mContext, "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                                MainPageActivity mainPageActivity = MainPageActivity.getInstance();
+                                mainPageActivity.onStart();
+                                popupWindow.dismiss();
+                                //mContext.startActivity(new Intent(mContext, MainPageActivity.class));
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "onFailure: This should'nt have happened");
+                            }
+                        });
+            }
+        });
+
+        Button popCan = customView.findViewById(R.id.popCan);
+        popCan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
 
     }
 

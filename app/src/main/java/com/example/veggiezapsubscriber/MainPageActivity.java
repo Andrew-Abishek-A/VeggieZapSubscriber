@@ -2,6 +2,7 @@ package com.example.veggiezapsubscriber;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,7 @@ public class MainPageActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseFirestore db;
+    static MainPageActivity instance;
 
     private String TAG = "MainPageActivity";
     ArrayList<String> items = new ArrayList<>();
@@ -43,6 +45,11 @@ public class MainPageActivity extends AppCompatActivity {
     RecyclerViewAdapter adapter;
     double total=0;
     final ArrayList<Integer> Total = new ArrayList<>();
+    ConstraintLayout MainLayout;
+
+    public static MainPageActivity getInstance(){
+        return instance;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,8 @@ public class MainPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_page);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        MainLayout = findViewById(R.id.MainLayout);
+        instance = this;
         hideNavigationBar();
 
         Button userDetails = findViewById(R.id.detailsButton);
@@ -181,7 +190,7 @@ public class MainPageActivity extends AppCompatActivity {
     public void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: Started recycler view");
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        adapter = new RecyclerViewAdapter(this, items, qty, date, price);
+        adapter = new RecyclerViewAdapter(this, items, qty, date, price, MainLayout);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

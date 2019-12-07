@@ -6,10 +6,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,43 +75,66 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     private void OrderUpload() {
-        pb.setVisibility(View.VISIBLE);
-        ArrayList<String> itemsSet = new ArrayList<>(adapter.itemsSet);
-        ArrayList<String> qtySet = adapter.qtySet;
-        ArrayList<String> priceSet = adapter.priceSet;
-        ArrayList<String> dateSet = adapter.dateSet;
-        for (int i = 0; i < itemsSet.size(); i++) {
-//            System.out.println(itemsSet.get(i));
-//            System.out.println(qtySet.get(i));
-//            System.out.println(priceSet.get(i));
-//            System.out.println(dateSet.get(i));
-            Map<String, String> data = new HashMap<>();
-            data.put("name", itemsSet.get(i));
-            data.put("quantity", qtySet.get(i));
-            data.put("price", priceSet.get(i));
-            data.put("date", dateSet.get(i));
-            //data.put("total", String.valueOf(Total));
-            db.collection("users")
-                    .document(mAuth.getCurrentUser().getEmail())
-                    .collection("cart")
-                    .document(itemsSet.get(i))
-                    .set(data)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(OrderActivity.this, "Upload Succesful", Toast.LENGTH_SHORT).show();
-                            pb.setVisibility(View.INVISIBLE);
-                            startActivity(new Intent(OrderActivity.this, MainPageActivity.class));
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d(TAG, "onFailure: " + e.toString());
-                            pb.setVisibility(View.INVISIBLE);
-                        }
-                    });
-        }
+
+        LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.popup_window1,null);
+
+        TextView popDel = customView.findViewById(R.id.popDel);
+        popDel.setText("Continue Shopping?");
+
+        Button popCan = customView.findViewById(R.id.popCan);
+        popCan.setText("Upload Cart");
+
+        final PopupWindow popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+        popCan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                pb.setVisibility(View.VISIBLE);
+                ArrayList<String> itemsSet = new ArrayList<>(adapter.itemsSet);
+                ArrayList<String> qtySet = adapter.qtySet;
+                ArrayList<String> priceSet = adapter.priceSet;
+                ArrayList<String> dateSet = adapter.dateSet;
+                for (int i = 0; i < itemsSet.size(); i++) {
+                    Map<String, String> data = new HashMap<>();
+                    data.put("name", itemsSet.get(i));
+                    data.put("quantity", qtySet.get(i));
+                    data.put("price", priceSet.get(i));
+                    data.put("date", dateSet.get(i));
+                    //data.put("total", String.valueOf(Total));
+                    db.collection("users")
+                            .document(mAuth.getCurrentUser().getEmail())
+                            .collection("cart")
+                            .document(itemsSet.get(i))
+                            .set(data)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(OrderActivity.this, "Upload Succesful", Toast.LENGTH_SHORT).show();
+                                    pb.setVisibility(View.INVISIBLE);
+                                    startActivity(new Intent(OrderActivity.this, MainPageActivity.class));
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: " + e.toString());
+                                    pb.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                }
+            }
+        });
+
+        Button popYes = customView.findViewById(R.id.popYes);
+        popYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
     }
 
     private void getProducts() {
