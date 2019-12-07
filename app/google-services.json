@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "486794968228",
+    "firebase_url": "https://veggiezap.firebaseio.com",
+    "project_id": "veggiezap",
+    "storage_bucket": "veggiezap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486794968228:android:4b64275412204687253a31",
+        "android_client_info": {
+          "package_name": "com.example.veggiezapsubscriber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486794968228-fkk4n9vg6ju1h6610gi5m9mn4tmt31gt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.veggiezapsubscriber",
+            "certificate_hash": "9f9029d14f79bc5ac4646b9e39563501e46b5af8"
+          }
+        },
+        {
+          "client_id": "486794968228-i9soodcbcig08r799r2lg43dqlv0og7f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZSfrye8KFjFrDESjWglroHQsN1gx-lRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486794968228-lqo6nak39ibtq0tmj7kfeuo3nmpoep5b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

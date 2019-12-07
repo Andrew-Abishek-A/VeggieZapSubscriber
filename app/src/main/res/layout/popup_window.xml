@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#000"
+    android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item: "
+        android:textSize="15dp"
+        android:textColor="#fff"
+        android:id="@+id/popItem"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price: "
+        android:textColor="#fff"
+        android:textSize="15dp"
+        android:layout_toRightOf="@+id/popItem"
+        android:layout_marginStart="100dp"
+        android:id="@+id/popPrice"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity: "
+        android:textColor="#fff"
+        android:layout_below="@+id/popItem"
+        android:layout_marginTop="10dp"
+        android:id="@+id/popqty"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:layout_toRightOf="@+id/popqty"
+        android:layout_marginTop="18dp"
+        android:inputType="number"
+        android:id="@+id/popAmount"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kilograms"
+        android:textColor="#fff"
+        android:layout_toRightOf="@+id/popAmount"
+        android:layout_below="@+id/popItem"
+        android:layout_marginTop="10dp"
+        android:id="@+id/metric"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:layout_below="@+id/popqty"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/popOk"/>
+
+</RelativeLayout>
