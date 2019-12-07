@@ -102,7 +102,8 @@ public class OrderActivity extends AppCompatActivity {
                     data.put("name", itemsSet.get(i));
                     data.put("quantity", qtySet.get(i));
                     data.put("price", priceSet.get(i));
-                    data.put("date", dateSet.get(i));
+                    data.put("date", String.valueOf(System.currentTimeMillis()));
+                    data.put("datetime", dateSet.get(i));
                     //data.put("total", String.valueOf(Total));
                     db.collection("users")
                             .document(mAuth.getCurrentUser().getEmail())

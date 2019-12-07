@@ -125,7 +125,7 @@ public class MainPageActivity extends AppCompatActivity {
                                                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                                                         items.add(document.get("name").toString());
                                                         qty.add(document.get("quantity").toString());
-                                                        date.add(document.get("date").toString());
+                                                        date.add(document.get("datetime").toString());
                                                         price.add(document.get("price").toString());
                                                         Total.add(Integer.parseInt(document.get("quantity").toString())
                                                                 * Integer.parseInt(document.get("price").toString()));
