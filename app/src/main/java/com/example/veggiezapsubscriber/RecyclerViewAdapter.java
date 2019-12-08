@@ -64,10 +64,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: The View Binder Has Been Called");
-        holder.item.setText(items.get(position));
-        holder.price.setText(price.get(position));
+        holder.item.setText("item "+items.get(position));
+        holder.price.setText("price "+price.get(position));
         holder.date.setText(date.get(position));
-        holder.qty.setText(qty.get(position));
+        holder.qty.setText("quantity "+qty.get(position));
         Glide.with(mContext)
                 .asBitmap()
                 .load("https://www.vegsoc.org/wp-content/uploads/2019/03/vegetable-box-750x580.jpg")

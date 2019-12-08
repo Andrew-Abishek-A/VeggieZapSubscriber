@@ -7,57 +7,66 @@
     android:layout_margin="10dp">
 
     <RelativeLayout
+        android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"
-        android:id="@+id/parent_layout">
+        android:padding="15dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:id="@+id/image"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_launcher" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="item"
             android:id="@+id/item"
-            android:layout_toRightOf="@id/image"
-            android:textColor="#000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
             android:layout_marginStart="40dp"
+            android:layout_marginLeft="39dp"
+            android:layout_toRightOf="@id/image"
+            android:text="item"
+            android:textColor="#000"
             android:textSize="17sp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
             android:id="@+id/qty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date"
+            android:layout_alignStart="@+id/date"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/price"
-            android:textColor="#000"
-            android:textSize="17dp"
-            android:layout_marginStart="40dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/price"
-            android:text="price"
-            android:layout_toRightOf="@+id/item"
-            android:textColor="#000"
-            android:layout_marginStart="40dp"
-            android:textSize="17dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/date"
             android:text=""
-            android:layout_toRightOf="@+id/image"
             android:textColor="#000"
-            android:layout_marginTop="50dp"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="243dp"
+            android:layout_height="36dp"
+            android:layout_below="@+id/item"
+            android:layout_marginLeft="-243dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/item"
+            android:text="price"
+            android:textColor="#000"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:textSize="17dp"/>
+            android:layout_marginLeft="41dp"
+            android:layout_below="@+id/price"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/image"
+            android:text=""
+            android:textColor="#000"
+            android:textSize="17dp" />
 
     </RelativeLayout>
 

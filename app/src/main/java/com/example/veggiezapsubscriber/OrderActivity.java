@@ -36,6 +36,7 @@ import java.util.Map;
 
 public class OrderActivity extends AppCompatActivity {
 
+    static OrderActivity instance;
     private String TAG = "OrderActivity";
     FirebaseFirestore db;
     FirebaseAuth mAuth;
@@ -60,6 +61,7 @@ public class OrderActivity extends AppCompatActivity {
         Total = findViewById(R.id.total);
         pb = findViewById(R.id.progressbarOrder);
         pb.setVisibility(View.INVISIBLE);
+        instance = this;
 
         getProducts();
 
@@ -72,6 +74,10 @@ public class OrderActivity extends AppCompatActivity {
                 OrderUpload();
             }
         });
+    }
+
+    public static OrderActivity getInstance(){
+        return instance;
     }
 
     private void OrderUpload() {

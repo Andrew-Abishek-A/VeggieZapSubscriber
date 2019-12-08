@@ -71,8 +71,8 @@ public class RecyclerViewAdapter1 extends RecyclerView.Adapter<RecyclerViewAdapt
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: The View Binder Has Been Called");
-        holder.item.setText(items.get(position));
-        holder.price.setText(price.get(position));
+        holder.item.setText("Item: " + items.get(position));
+        holder.price.setText("Price: " + price.get(position));
         holder.date.setText(date.get(position));
         holder.qty.setText(qty.get(position));
         Glide.with(mContext)
@@ -112,6 +112,8 @@ public class RecyclerViewAdapter1 extends RecyclerView.Adapter<RecyclerViewAdapt
                 if(amount.equalsIgnoreCase("")){
                     Toast.makeText(mContext, "Enter Quantity", Toast.LENGTH_SHORT).show();
                     popupWindow.dismiss();
+                    OrderActivity instance = OrderActivity.getInstance();
+                    instance.hideNavigationBar();
                 }
 
                 boolean flag = itemsSet.add(item);
@@ -126,10 +128,14 @@ public class RecyclerViewAdapter1 extends RecyclerView.Adapter<RecyclerViewAdapt
                     dateSet.add(dateFormat.format(new Date()));
                     Toast.makeText(mContext, "Added to cart", Toast.LENGTH_SHORT).show();
                     popupWindow.dismiss();
+                    OrderActivity instance = OrderActivity.getInstance();
+                    instance.hideNavigationBar();
                 }
                 else{
                     Toast.makeText(mContext, "Cart Contains This Item", Toast.LENGTH_SHORT).show();
                     popupWindow.dismiss();
+                    OrderActivity instance = OrderActivity.getInstance();
+                    instance.hideNavigationBar();
                 }
             }
         });
