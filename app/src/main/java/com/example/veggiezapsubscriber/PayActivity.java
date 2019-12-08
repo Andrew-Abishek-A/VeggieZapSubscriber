@@ -111,7 +111,7 @@ public class PayActivity extends AppCompatActivity implements PaytmPaymentTransa
     }
 
     private void initializePaytmPayment(String checksumHash, Paytm paytm) {
-        PaytmPGService Service = PaytmPGService.getStagingService("Okay");
+        PaytmPGService Service = PaytmPGService.getStagingService("");
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("MID", Constants.M_ID);
         paramMap.put("ORDER_ID", paytm.getOrderId());
