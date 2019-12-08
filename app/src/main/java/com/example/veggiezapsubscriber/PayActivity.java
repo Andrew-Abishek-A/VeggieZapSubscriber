@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -100,6 +101,8 @@ public class PayActivity extends AppCompatActivity implements PaytmPaymentTransa
 
                 //once we get the checksum we will initiailize the payment.
                 //the method is taking the checksum we got and the paytm object as the parameter
+                //Toast.makeText(PayActivity.this, response.body().getChecksumHash(), Toast.LENGTH_SHORT).show();
+                Log.d("PayActivity", "onResponse: " + response.body().getChecksumHash());
                 initializePaytmPayment(response.body().getChecksumHash(), paytm);
             }
 
@@ -112,6 +115,7 @@ public class PayActivity extends AppCompatActivity implements PaytmPaymentTransa
 
     private void initializePaytmPayment(String checksumHash, Paytm paytm) {
         PaytmPGService Service = PaytmPGService.getStagingService("");
+        //PaytmPGService Service = PaytmPGService.getProductionService();
         HashMap<String, String> paramMap = new HashMap<>();
         paramMap.put("MID", Constants.M_ID);
         paramMap.put("ORDER_ID", paytm.getOrderId());
@@ -119,11 +123,14 @@ public class PayActivity extends AppCompatActivity implements PaytmPaymentTransa
         paramMap.put("CHANNEL_ID", paytm.getChannelId());
         paramMap.put("TXN_AMOUNT", paytm.getTxnAmount());
         paramMap.put("WEBSITE", paytm.getWebsite());
-        paramMap.put("CALLBACK_URL", paytm.getCallBackUrl());
+        paramMap.put("CALLBACK_URL", paytm.getCallBackUrl()+paytm.getOrderId());
         paramMap.put("CHECKSUMHASH", checksumHash);
         paramMap.put("INDUSTRY_TYPE_ID", paytm.getIndustryTypeId());
-        paramMap.put("EMAIL", mAuth.getCurrentUser().getEmail());
-        paramMap.put("MOBILE_NO", phone);
+        paramMap.put("EMAIL", "");
+        paramMap.put("MOBILE_NO", "");
+//        paramMap.put("EMAIL", mAuth.getCurrentUser().getEmail());
+//        paramMap.put("MOBILE_NO", phone);
+        Log.d("PayActivity", "initializePaytmPayment: " + paramMap.toString());
         PaytmOrder order = new PaytmOrder(paramMap);
         Service.initialize(order, null);
         Service.startPaymentTransaction(this, true, true, this);
@@ -131,7 +138,8 @@ public class PayActivity extends AppCompatActivity implements PaytmPaymentTransa
 
     @Override
     public void onTransactionResponse(Bundle inResponse) {
-        Toast.makeText(this, "There apparently is a response", Toast.LENGTH_LONG).show();
+        Log.d("PayActivity", "onTransactionResponse: " + inResponse.toString());
+        //Toast.makeText(getApplicationContext(), "Payment Transaction response " + inResponse.toString(), Toast.LENGTH_LONG).show();
     }
 
     @Override
